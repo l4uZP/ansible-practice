@@ -1,0 +1,5 @@
+[webservers]
+172.16.88.67 ansible_ssh_user=ubuntu ansible_ssh_pass=ubuntu
+
+[databases]
+172.16.88.136 ansible_ssh_user=ubuntu ansible_ssh_pass=ubuntu
