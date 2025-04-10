@@ -1,0 +1,21 @@
+- name: Testing core modules
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Ensure a directory exists
+    ansible.builtin.file:
+      path: /etc/nginx
+      state: directory
+  - name: Copy a config file
+    ansible.builtin.copy:
+      src: nginx.conf
+      dest: /etc/nginx/nginx.conf
+  - name: Install Apache
+    ansible.builtin.package:
+      name: apache2
+      state: present
+  - name: Start and enable Apache
+    ansible.builtin.service:
+      name: apache2
+      state: started
+      enabled: no
