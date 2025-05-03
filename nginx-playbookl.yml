@@ -1,0 +1,25 @@
+- name: Configure Webserver
+  hosts: webservers
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Create logs directory
+      ansible.builtin.file:
+        path: /var/log/nginx
+        state: directory
+        mode: '0755'
+    
+    - name: Deploy configuration file
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+        mode: '0644'
+      
+    - name: Start and enable Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes

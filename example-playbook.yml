@@ -5,11 +5,29 @@
     ansible.builtin.file:
       path: /tmp/example
       state: directory
+  
   - name: Copy a file
     ansible.builtin.copy:
       src: example.txt
       dest: /tmp/example/example.txt
+  
   - name: Ensure Apache is running
     ansible.builtin.service:
       name: apache2
       state: started
+  
+  - name: Restart Nginx
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
+
+  - name: Create config file
+    ansible.builtin.file:
+      path: /etc/myapp/config.yml
+      state: touch
+      mode: '0644'
+
+  - name: Delete file
+    ansible.builtin.file:
+      path: /etc/myapp/config.yml
+      state: absent
