@@ -1,0 +1,44 @@
+- name: Configure Nginx webservers
+  hosts: webservers
+  vars:
+    app_name: myapp
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Create logs directory
+      ansible.builtin.file:
+        path: /var/log/nginx
+        state: directory
+        mode: '0755'
+    
+    - name: Create web root directory
+      ansible.builtin.file:
+        path: "/var/www/{{ app_name }}"
+        state: directory
+        mode: '0755'
+    
+    - name: Deploy index.html
+      template:
+        src: index.html.j2
+        dest: "/var/www/{{ app_name }}/index.html"
+        mode: '0644'
+    
+    - name: Deploy nginx configuration
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf 
+        validate: 'nginx -t -c %s'
+      
+    - name: Start and enable Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes

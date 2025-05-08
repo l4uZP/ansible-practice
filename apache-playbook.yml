@@ -1,4 +1,4 @@
-- name: Configure Webserver
+- name: Configure Apache webservers
   hosts: webservers
   tasks:
     - name: Ensure Apache is installed

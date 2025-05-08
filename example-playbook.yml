@@ -31,3 +31,12 @@
     ansible.builtin.file:
       path: /etc/myapp/config.yml
       state: absent
+
+  - name: Print the hostname(from a fact)
+    debug:
+      msg: "Hostname: {{ ansible_hostname }}"
+
+  - name: Deploy Nginx configuration
+    template:
+      src: nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
